@@ -3,8 +3,8 @@
         Extends: Hilo.Container,
         moveTween: null,
         hira: null,
-        hiraX: 9,
-        hiraY: 7 * 170,
+        hiraX: 35,
+        hiraY: 7 * 173,
         heart: 30,
         heartIcon: null,
         heartScore: null,
@@ -47,10 +47,10 @@
         // 开始移动
         startMove: function (rockObj, usedHeart) {
             var rockX = rockObj.x;
-            var rockY = rockObj.y
+            var rockY = rockObj.y;
             //设置缓动时间
             this.moveTween.time = 20 * 9;
-            this.moveTween.to(this.hira, {x: rockX + 9, y: rockY}, {
+            this.moveTween.to(this.hira, {x: rockX, y: rockY}, {
                 onComplete: function () {
                     rockObj.visible = false;
                 }

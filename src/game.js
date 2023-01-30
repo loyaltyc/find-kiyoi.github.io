@@ -77,7 +77,8 @@
         initRock: function () {
             this.rock = new game.Rock({
                 id: 'rock',
-                image: this.asset.rock
+                image: this.asset.rock,
+                tipImgArr: this.asset.tipImgArr,
             }).addTo(this.stage);
         },
         initHira() {
@@ -91,7 +92,7 @@
         },
         onUserInput: function (e) {
             // 平良移动中 或 点击平良
-            if (this.state === 'moving' || e.eventTarget.id === 'hira') {
+            if (this.state === 'moving' || e.eventTarget.id === 'hira' || this.state === 'over') {
                 return;
             }
             // 开始游戏
@@ -146,6 +147,7 @@
         },
         gameOver(isWin = false) {
             // 游戏结束，可重新开始
+            this.state = 'over'
         },
         initRockScene() {
             this.gameRockScene = new game.RockScene({

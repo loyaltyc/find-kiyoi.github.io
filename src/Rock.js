@@ -6,7 +6,7 @@
         colNum: 5,
         rockBox: [],
         itemRockObj: {},
-        eventArr: ['shirota', 'clean-up', 'sleep-kiyoi', 'stalker', 'kiss', 'river', 'coffee', 'subway', 'likewho', 'kissgoodbye', 'water'],
+        eventArr: ['shirota', 'cleanUp', 'sleep-kiyoi', 'stalker', 'kiss', 'river', 'coffee', 'subway', 'likewho', 'kissgoodbye', 'water'],
         itemArr: ['duck', 'bicycle', 'gun', 'soda', 'hat', 'firework', 'duck', 'bicycle', 'gun', 'soda', 'hat', 'firework', 'duck', 'bicycle', 'gun', 'soda', 'hat', 'firework', 'duck', 'duck', 'duck'],
         descArr: {
             'duck': '这是一个获得老婆青睐的鸭子队长，为你带来幸运 BUFF 。体力 +1.',
@@ -16,7 +16,7 @@
             'hat': '戴了之后更可疑的伪装道具。',
             'firework': '鸳鸯戏水之后，难道不想再来一次换装 PLAY 吗？',
         },
-        punishEventArr: ['shirota', 'clean-up', 'subway', 'likewho', 'kissgoodbye'],
+        punishEventArr: ['shirota', 'cleanUp', 'subway', 'likewho', 'kissgoodbye'],
         eventAnswer: {
             'sleep-kiyoi': {'addHeart': 3, 'item': 'camera', 'yes': '偶遇睡着的神明，还不赶快掏出自带的照相机啪啪啪啪啪？体力 +3', 'no': ''},
             'stalker': {
@@ -50,31 +50,33 @@
                 'no': '没有烟花的代价是，我们好多人都失去了壁纸。'
             },
             'shirota': {
-                'addHeart': -3,
+                'addHeart': 3,
                 'desc': '遇到了找茬的臭虫，真倒霉。希望他不要再出现在神明周围了。体力 -3'
             },
-            'clean-up': {
-                'addHeart': -3,
+            'cleanUp': {
+                'addHeart': 3,
                 'desc': '慌慌张张大扫除中！手忙脚乱，收内裤收内裤...... 体力 -3'
             },
             'subway': {
-                'addHeart': -5,
+                'addHeart': 5,
                 'desc': '我坐地铁回去。（微笑） 体力 -5'
             },
             'likewho': {
-                'addHeart': -5,
+                'addHeart': 5,
                 'desc': '我想不明白，为什么老婆亲了我一下，又踢了我一脚。我做错什么了？ 体力 -5'
             },
             'kissgoodbye': {
-                'addHeart': -3,
+                'addHeart': 3,
                 'desc': '神明给了我最后的施舍，他修正了错误，独留我一个人在金字塔下。 体力 -3'
             },
         },
         // 平良的背包
         hiraPackage: [],
+        tipImgArr: {},
         constructor: function (properties) {
             Rock.superclass.constructor.call(this, properties);
             this.hiraPackage = ['camera'];
+            this.tipImgArr = properties.tipImgArr
             this.createRock(properties.image);
             this.pushItem();
         },
@@ -96,7 +98,7 @@
                         depth: 20
                     }).addTo(this);
                     this.rockBox.push(id)
-                    rockList.x = col * 180;
+                    rockList.x = col * 170;
                     rockList.y = row * 170;
                 }
             }
@@ -166,6 +168,8 @@
             }
             var boxContent = checkResult.boxContent;
             var pickRock = this.getChildAt(checkResult.index);
+            pickRock.x = pickRock.x + 40;
+            pickRock.y = pickRock.y + 15;
             // 空白格子
             if (boxContent === 'empty') {
                 pickRock.visible = false;
@@ -180,11 +184,10 @@
             }
             // 道具格子
             var isItemBox = this.itemArr.findIndex(value => value === boxContent);
-            var itemImage = 'images/' + boxContent + '.png'
+            var itemImage = this.tipImgArr[boxContent];
             pickRock.setImage(itemImage);
-            pickRock.scaleX = 1.2;
-            pickRock.scaleY = 1.2;
-            pickRock.x = pickRock.x + 18;
+            pickRock.scaleX = 1.1;
+            pickRock.scaleY = 1.1;
             if (isItemBox !== -1) {
                 this.hiraPackage.push(boxContent);
                 rockData.descContent = this.descArr[boxContent];
