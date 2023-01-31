@@ -5,7 +5,7 @@
         hira: null,
         hiraX: 10,
         hiraY: 7 * 161,
-        heart: 2,
+        heart: 20,
         heartIcon: null,
         heartScore: null,
         constructor: function (properties) {
