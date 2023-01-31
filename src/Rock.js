@@ -6,7 +6,7 @@
         colNum: 5,
         rockBox: [],
         itemRockObj: {},
-        eventArr: ['shirota', 'cleanUp', 'sleep-kiyoi', 'stalker', 'kiss', 'river', 'coffee', 'subway', 'likewho', 'kissgoodbye', 'water'],
+        eventArr: ['shirota', 'cleanUp', 'sleepKiyoi', 'stalker', 'kiss', 'river', 'coffee', 'subway', 'likewho', 'kissgoodbye', 'water'],
         itemArr: ['duck', 'bicycle', 'gun', 'soda', 'hat', 'firework', 'duck', 'bicycle', 'gun', 'soda', 'hat', 'firework', 'duck', 'bicycle', 'gun', 'soda', 'hat', 'firework', 'duck', 'duck', 'duck'],
         descArr: {
             'duck': '这是一个获得老婆青睐的鸭子队长，为你带来幸运 BUFF 。体力 +1.',
@@ -18,7 +18,7 @@
         },
         punishEventArr: ['shirota', 'cleanUp', 'subway', 'likewho', 'kissgoodbye'],
         eventAnswer: {
-            'sleep-kiyoi': {'addHeart': 3, 'item': 'camera', 'yes': '偶遇睡着的神明，还不赶快掏出自带的照相机啪啪啪啪啪？体力 +3', 'no': ''},
+            'sleepKiyoi': {'addHeart': 3, 'item': 'camera', 'yes': '偶遇睡着的神明，还不赶快掏出自带的照相机啪啪啪啪啪？体力 +3', 'no': ''},
             'stalker': {
                 'addHeart': 3,
                 'item': 'soda',
@@ -82,6 +82,10 @@
         },
         // 创建格子
         createRock: function (image) {
+            let bgWidth = window.game.width;
+            let bgHeight = window.game.height;
+            let scaleX = bgWidth / (5 * image.width);
+            let scaleY = bgHeight / (8 * image.height);
             for (var row = 0; row < this.rowNum; row++) {
                 for (var col = 0; col < this.colNum; col++) {
                     // 留下平良的位置
@@ -92,14 +96,14 @@
                     var rockList = new Hilo.Bitmap({
                         id: id,
                         image: image,
-                        scaleX: 2,
-                        scaleY: 2.5,
+                        scaleX: scaleX,
+                        scaleY: scaleY,
                         rect: [0, 0, 120, 120],
                         depth: 20
                     }).addTo(this);
                     this.rockBox.push(id)
-                    rockList.x = col * 170;
-                    rockList.y = row * 170;
+                    rockList.x = col * 160;
+                    rockList.y = row * 160;
                 }
             }
         },
@@ -164,11 +168,12 @@
         getRockData(checkResult) {
             let rockData = {
                 index: checkResult.index,
-                boxContent: checkResult.boxContent
+                boxContent: checkResult.boxContent,
+                hiraPackage:this.hiraPackage
             }
             var boxContent = checkResult.boxContent;
             var pickRock = this.getChildAt(checkResult.index);
-            pickRock.x = pickRock.x + 40;
+            pickRock.x = pickRock.x + 15;
             pickRock.y = pickRock.y + 15;
             // 空白格子
             if (boxContent === 'empty') {

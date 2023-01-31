@@ -11,6 +11,8 @@
         heart: null,
         number: null,
         readyTip: null,
+        gamewin: null,
+        gameLose: null,
         load: function () {
             var resources = [
                 {id: 'bg', src: 'images/bg.png'},
@@ -21,7 +23,7 @@
                 {id: 'number', src: 'images/number.png'},
                 {id: 'readyTip', src: 'images/readyTip.png'},
                 {id: 'bicycle', src: 'images/bicycle.png'},
-                {id: 'bicycle', src: 'images/bicycle.png'},
+                {id: 'duck', src: 'images/duck.png'},
                 {id: 'cleanUp', src: 'images/cleanUp.png'},
                 {id: 'coffee', src: 'images/coffee.png'},
                 {id: 'firework', src: 'images/firework.png'},
@@ -33,6 +35,13 @@
                 {id: 'shirota', src: 'images/shirota.png'},
                 {id: 'soda', src: 'images/soda.png'},
                 {id: 'water', src: 'images/water.png'},
+                {id: 'sleepKiyoi', src: 'images/sleepKiyoi.png'},
+                {id: 'likewho', src: 'images/likewho.png'},
+                {id: 'stalker', src: 'images/stalker.png'},
+                {id: 'subway', src: 'images/subway.png'},
+                {id: 'gamewin', src: 'images/gamewin.png'},
+                {id: 'gameLose', src: 'images/gameLose.png'},
+
             ];
 
             this.queue = new Hilo.LoadQueue();
@@ -48,8 +57,11 @@
             this.tipBg = this.queue.get('tipBg').content;
             this.heart = this.queue.get('heart').content;
             this.readyTip = this.queue.get('readyTip').content;
+            this.gamewin = this.queue.get('gamewin').content;
+            this.gameLose = this.queue.get('gameLose').content;
             this.tipImgArr = {
                 'bicycle': this.queue.get('bicycle').content,
+                'duck': this.queue.get('duck').content,
                 'cleanUp': this.queue.get('cleanUp').content,
                 'coffee': this.queue.get('coffee').content,
                 'firework': this.queue.get('firework').content,
@@ -61,6 +73,10 @@
                 'shirota': this.queue.get('shirota').content,
                 'soda': this.queue.get('soda').content,
                 'water': this.queue.get('water').content,
+                'sleepKiyoi': this.queue.get('sleepKiyoi').content,
+                'likewho': this.queue.get('likewho').content,
+                'stalker': this.queue.get('stalker').content,
+                'subway': this.queue.get('subway').content,
             }
             var number = this.queue.get('number').content;
             this.numberGlyphs = {

@@ -7,14 +7,25 @@
             this.init(properties);
         },
         rockTip: null,
+        winImg: null,
+        tipWidth: 0,
         tipType: '',
+        tipImgArr: {},
         init: function (properties) {
+            this.tipImgArr = properties.tipImgArr
+            this.winImg = properties.winImg
+
+            let rockTip = properties.image;
+            let scaleX = window.game.width / (rockTip.width * 1.2);
+            let newWidth = rockTip.width * scaleX * 0.5;
+            this.tipWidth = newWidth;
+            let tipX = (window.game.width - newWidth) / 8
             this.rockTip = new Hilo.Bitmap({
                 id: 'rockTip',
                 image: properties.image,
-                scaleX: 1,
-                scaleY: 1,
-                x: 20,
+                scaleX: scaleX,
+                // scaleY: 1,
+                x: tipX,
                 y: -800
             });
             this.addChild(this.rockTip);
@@ -32,13 +43,14 @@
                     }
                     _this.addTipTitle();
                     _this.addItemImage(rockData);
+                    window.game.state = 'showTip';
                 }
             });
         },
         // 提示框标题
         addTipTitle() {
             let title = this.tipType === 'item' ? '获得了道具：' : '发生事件：';
-            var titleView = new Hilo.DOMElement({
+            new Hilo.DOMElement({
                 id: 'titleView',
                 element: Hilo.createElement('div', {
                     innerHTML: title,
@@ -59,17 +71,18 @@
         // 添加道具图片
         addItemImage(rockData) {
             // 道具图片
-            var itemImage = 'images/' + rockData.boxContent + '.png'
-            var tipContent = new Hilo.Bitmap({
+            var itemImage = this.tipImgArr[rockData.boxContent];
+            let imageX = (window.game.width - itemImage.width) / 2
+            new Hilo.Bitmap({
                 id: 'tipContent',
                 image: itemImage,
                 scaleX: 0.8,
                 scaleY: 0.8,
-                x: 320,
+                x: imageX,
                 y: 350
             }).addTo(this);
             // 道具描述
-            var descView = new Hilo.DOMElement({
+            new Hilo.DOMElement({
                 id: 'descView',
                 element: Hilo.createElement('div', {
                     innerHTML: rockData.descContent,
@@ -77,14 +90,14 @@
                         position: 'absolute',
                         color: 'rgb(249,195,22)',
                         fontWeight: 'bolder',
-                        fontSize: '30px',
+                        fontSize: '25px',
                         webkitTextStroke: '1px rgb(63,86,160)'
                     }
                 }),
-                width: 380,
+                width: this.tipWidth - 30,
                 height: 100,
-                x: 45,
-                y: 300
+                x: 55,
+                y: 320
             }).addTo(this)
         },
         hide() {
@@ -95,7 +108,7 @@
             this.getChildById('titleView').removeFromParent();
             this.getChildById('descView').removeFromParent();
             this.tipType = '';
-        }
+        },
     });
 
 })(window.game);

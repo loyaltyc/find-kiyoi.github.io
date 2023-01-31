@@ -3,9 +3,9 @@
         Extends: Hilo.Container,
         moveTween: null,
         hira: null,
-        hiraX: 35,
-        hiraY: 7 * 173,
-        heart: 30,
+        hiraX: 10,
+        hiraY: 7 * 161,
+        heart: 2,
         heartIcon: null,
         heartScore: null,
         constructor: function (properties) {
@@ -19,8 +19,8 @@
             this.hira = new Hilo.Bitmap({
                 id: 'hira',
                 image: properties.image,
-                scaleX: 0.5,
-                scaleY: 0.5,
+                scaleX: 0.45,
+                scaleY: 0.45,
                 x: this.hiraX,
                 y: this.hiraY
             }).addTo(this);
@@ -45,29 +45,27 @@
             this.getChildById('score').setText(this.heart);
         },
         // 开始移动
-        startMove: function (rockObj, usedHeart) {
+        startMove(rockObj, rockData) {
             var rockX = rockObj.x;
             var rockY = rockObj.y;
             //设置缓动时间
-            this.moveTween.time = 20 * 9;
+            var _this = this;
+            this.moveTween.time = 120;
             this.moveTween.to(this.hira, {x: rockX, y: rockY}, {
                 onComplete: function () {
                     rockObj.visible = false;
+                    // 扣除体力
+                    let isGameOver = _this.takeHeart(rockData.usedHeart)
+                    window.game.endMove(isGameOver, rockData);
                 }
             });
-            // 扣除体力
-            this.takeHeart(usedHeart)
         },
         // 扣除，并检查剩余体力
         takeHeart(usedHeart) {
             this.heart = this.heart - usedHeart;
             this.getChildById('score').setText(this.heart);
-            if (this.heart <= 0) {
-                return false;
-            }
-            return true;
+            return this.heart <= 0;
         }
-
     });
 
 })(window.game);
